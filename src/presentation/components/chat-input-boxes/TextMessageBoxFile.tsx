@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 
 interface Props {
-    onSendMessage: (message: string) => void;
+    onSendMessage: (message: string, file: File) => void;
     placeholder?: string;
     disableCorrections?: boolean;
     accept?: string;
@@ -17,10 +17,11 @@ export const TextMessageBoxfile = ({ onSendMessage, placeholder, disableCorrecti
 
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (message.trim().length === 0) return;
-        console.log('HandleSendMessage');
-        onSendMessage(message);
+        //if (message.trim().length === 0) return;
+        if (!selectedFile) return;
+        onSendMessage(message, selectedFile);
         setMessage('');
+        setSelectedFile(null);
     }
 
     return (
@@ -41,8 +42,8 @@ export const TextMessageBoxfile = ({ onSendMessage, placeholder, disableCorrecti
                 <button className="btn-primary" disabled={!selectedFile}>
                     {
                         (!selectedFile)
-                        ? <span className="mr-2">Enviar</span>
-                        : <span className="mr-2">{selectedFile.name.substring(0, 10) + '...'}</span>
+                            ? <span className="mr-2">Enviar</span>
+                            : <span className="mr-2">{selectedFile.name.substring(0, 10) + '...'}</span>
                     }
                     <i className="fa-regular fa-paper-plane"></i>
                 </button>

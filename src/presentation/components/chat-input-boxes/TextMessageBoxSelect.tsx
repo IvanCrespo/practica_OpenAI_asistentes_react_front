@@ -20,6 +20,7 @@ export const TextMessageBoxSelect = ({ onSendMessage, placeholder, disableCorrec
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (message.trim().length === 0) return;
+        if (selectedOption === '') return;
         console.log('HandleSendMessage');
         onSendMessage(message, selectedOption);
         setMessage('');
@@ -33,7 +34,7 @@ export const TextMessageBoxSelect = ({ onSendMessage, placeholder, disableCorrec
                         autoCorrect={disableCorrections ? 'on' : 'false'} spellCheck={disableCorrections ? 'true' : 'false'} value={message} onChange={(e) => setMessage(e.target.value)} />
                     <select name="select" className="w-2/5 ml-5 border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10" value={selectedOption}
                         onChange={e => setSelectedOption(e.target.value)}>
-                            <option value="">Seleccione</option>
+                        <option value="">Seleccione</option>
                         {
                             options.map(({ id, text }) => (
                                 <option key={id} value={id}>{text}</option>
